@@ -6,39 +6,47 @@
 /*   By: kialvare <kialvare@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 11:49:47 by kialvare          #+#    #+#             */
-/*   Updated: 2017/07/02 16:05:03 by                  ###   ########.fr       */
+/*   Updated: 2017/07/03 16:19:43 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-#include <stdio.h>
 
-/* Flags:
-** s S - String
-** p - pointer
-** d D - decimal signed integer
-** i - decimal signed integer
-** o O - octal integer
-** u U - unsigned integer
-** x X - hex integer
-** c C - character
-** %% - percentage sign
-** #0-+ and ' ' - some flags shit
-** minimum field-width
-** precision?
-** hh0
-** h
-** l
-** ll
-** j
-** z
-*/
+char	*parse_args(char *str, va_list args, t_conv *conversion)
+{
+	(void)conversion;
+	(void)args;
+	while (*str != '\0')
+	{
+		ft_putchar(*str);
+		str++;
+	}
+	return (str);
+}
 
 int		ft_printf(const char *format, ...)
 {
 	va_list args;
-	va_start(args, format);
+	char *str;
+	t_conv conversion;
 
+	conversion.flag_var = (t_flags*)malloc(sizeof(t_flags) * 1);
+	conversion.count = 0;
+	va_start(args, format);
+	str = (char*)format;
+	while(*str != '\0')
+	{
+		while (*str != '%')
+		{
+			conversion.count++;
+			ft_putchar(*str);
+			str++;
+		}
+		if (*str == '%')
+			str++;
+		if (*str != '\0')
+			str = parse_args(str, args, &conversion);
+	}
 	va_end(args);
 	return (0);
 }
