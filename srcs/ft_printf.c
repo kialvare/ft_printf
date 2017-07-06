@@ -6,47 +6,78 @@
 /*   By: kialvare <kialvare@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 11:49:47 by kialvare          #+#    #+#             */
-/*   Updated: 2017/07/03 16:19:43 by                  ###   ########.fr       */
+/*   Updated: 2017/07/05 23:56:04 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char	*parse_args(char *str, va_list args, t_conv *conversion)
-{
-	(void)conversion;
-	(void)args;
-	while (*str != '\0')
-	{
-		ft_putchar(*str);
-		str++;
-	}
-	return (str);
-}
+#include <stdio.h>
+#include <stdarg.h>
+
+// [ 0 , 1 , 2 ] ?
+//   ^
+//   ^argp
 
 int		ft_printf(const char *format, ...)
 {
-	va_list args;
-	char *str;
-	t_conv conversion;
+	const char *p;
+	va_list argp;
+	int c;
+	unsigned int u;
+	int percent;
+	int d;
+	char *s;
+	t_flags flag;
 
-	conversion.flag_var = (t_flags*)malloc(sizeof(t_flags) * 1);
-	conversion.count = 0;
-	va_start(args, format);
-	str = (char*)format;
-	while(*str != '\0')
+	va_start(argp, format);
+	p = format;
+	while (*p != '\0')
 	{
-		while (*str != '%')
+		if (*p != '%')
+			ft_putchar(*p);
+		else
 		{
-			conversion.count++;
-			ft_putchar(*str);
-			str++;
+			char next = *++p;
+			if (next == 'c')
+			{
+				c = va_arg(argp, int);
+				ft_putchar(c);
+			}
+			else if (next == 's')
+			{
+				s = va_arg(argp, char *);
+				ft_putstr(s);
+			}
+			else if (next == 'd')
+			{
+				d = va_arg(argp, int);
+				ft_putstr(ft_itoa(d));
+			}
+			else if (next == '%')
+			{
+				percent = va_arg(argp, int);
+				ft_putchar('%');
+			}
+			else if (next == 'u')
+			{
+				u = va_arg(argp, unsigned int);
+				s = ft_itoa(u);
+				ft_putstr(s);
+			}
+			else if (next == 0)
+			{
+				flag.zero = ++next;
+				d = va_arg(argp, int);
+				printf("num: %d", flag.zero);
+			}
+			else if (next == 'o')
+			{
+			}
 		}
-		if (*str == '%')
-			str++;
-		if (*str != '\0')
-			str = parse_args(str, args, &conversion);
+		p++;
 	}
-	va_end(args);
+	va_end(argp);
 	return (0);
 }
+
