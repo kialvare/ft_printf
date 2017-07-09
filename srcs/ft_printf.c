@@ -6,7 +6,7 @@
 /*   By: kialvare <kialvare@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 11:49:47 by kialvare          #+#    #+#             */
-/*   Updated: 2017/07/05 23:56:04 by                  ###   ########.fr       */
+/*   Updated: 2017/07/07 18:26:41 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		ft_printf(const char *format, ...)
 {
 	const char *p;
 	va_list argp;
-	int c;
 	unsigned int u;
 	int percent;
 	int d;
@@ -40,10 +39,7 @@ int		ft_printf(const char *format, ...)
 		{
 			char next = *++p;
 			if (next == 'c')
-			{
-				c = va_arg(argp, int);
-				ft_putchar(c);
-			}
+				print_char(argp);
 			else if (next == 's')
 			{
 				s = va_arg(argp, char *);
@@ -65,14 +61,11 @@ int		ft_printf(const char *format, ...)
 				s = ft_itoa(u);
 				ft_putstr(s);
 			}
-			else if (next == 0)
+			else if (next == '0')
 			{
-				flag.zero = ++next;
+				flag.zero = *p++;
 				d = va_arg(argp, int);
-				printf("num: %d", flag.zero);
-			}
-			else if (next == 'o')
-			{
+				printf("num: %s\n", ft_itoa(flag.zero));
 			}
 		}
 		p++;

@@ -6,7 +6,7 @@
 /*   By: kialvare <kialvare@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 11:47:35 by kialvare          #+#    #+#             */
-/*   Updated: 2017/07/05 19:26:47 by                  ###   ########.fr       */
+/*   Updated: 2017/07/07 18:28:53 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,16 @@ int		main(void)
 	i = 4294967100;
 	d = 42;
 	str = "hello";
-	printf("printf: This is %s the num: %u it's 5%%\n", str, i);
-	ft_printf("ft_printf: This is %s the num: %u it's 5%%\n", str, i);
-	printf("printf: This is the num: %05d", d);
-	ft_printf("ft_printf: This is the num: %05d", d);
+	ft_printf("ft_printf: %%|\n");
+	printf("rl_printf: %%|\n");
+	printf("\n");
+	ft_printf("ft_printf: %c|\n", 'a');
+	printf("rl_printf: %c|\n", 'a');
+	printf("\n");
+	ft_printf("ft_printf: %d|\n", i);
+	printf("rl_printf: %d|\n", i);
+	ft_printf("\n");
+	ft_printf("ft_printf: %05d|\n", 123);
+	printf("rl_printf: %05d|\n", 123);
 	return (0);
 }
