@@ -16,11 +16,20 @@
 ** p = current position
 */
 
-int print_char(va_list argp)
+int print_char(va_list argp, char next)
 {
 	int c;
+	int percent;
 
-	c = va_arg(argp, int);
-	ft_putchar(c);
+	if (next == 'c')
+	{
+		c = va_arg(argp, int);
+		ft_putchar(c);
+	}
+	else if (next == '%')
+	{
+		percent = va_arg(argp, int);
+		ft_putchar('%');
+	}
 	return (0);
 }

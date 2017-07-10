@@ -23,8 +23,6 @@ int		ft_printf(const char *format, ...)
 {
 	const char *p;
 	va_list argp;
-	unsigned int u;
-	int percent;
 	int d;
 	char *s;
 	t_flags flag;
@@ -38,29 +36,15 @@ int		ft_printf(const char *format, ...)
 		else
 		{
 			char next = *++p;
-			if (next == 'c')
-				print_char(argp);
+			if (next == 'c' || next == '%')
+				print_char(argp, next);
 			else if (next == 's')
 			{
 				s = va_arg(argp, char *);
 				ft_putstr(s);
 			}
-			else if (next == 'd')
-			{
-				d = va_arg(argp, int);
-				ft_putstr(ft_itoa(d));
-			}
-			else if (next == '%')
-			{
-				percent = va_arg(argp, int);
-				ft_putchar('%');
-			}
-			else if (next == 'u')
-			{
-				u = va_arg(argp, unsigned int);
-				s = ft_itoa(u);
-				ft_putstr(s);
-			}
+			else if (next == 'd' || next == 'u')
+				print_nums(va_list argp, char next);
 			else if (next == '0')
 			{
 				flag.zero = *p++;

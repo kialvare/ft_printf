@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static char				*num_str(int n, char *s, unsigned int i)
+static char				*num_str(unsigned int n, char *s, unsigned int i)
 {
 	unsigned int num;
 
@@ -34,7 +34,7 @@ static char				*num_str(int n, char *s, unsigned int i)
 	return (s);
 }
 
-static unsigned int		num_len(int n)
+static unsigned int		num_len(unsigned int n)
 {
 	unsigned int i;
 	unsigned int num;
@@ -55,7 +55,7 @@ static unsigned int		num_len(int n)
 	return (i);
 }
 
-char					*ft_itoa(int n)
+char					*ft_itoa(unsigned int n)
 {
 	unsigned int	size;
 	char			*s;

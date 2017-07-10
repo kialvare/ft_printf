@@ -28,8 +28,10 @@ int		main(void)
 	ft_printf("ft_printf: %c|\n", 'a');
 	printf("rl_printf: %c|\n", 'a');
 	printf("\n");
-	ft_printf("ft_printf: %d|\n", i);
-	printf("rl_printf: %d|\n", i);
+	ft_printf("ft_printf: %d|\n", d);
+	printf("rl_printf: %d|\n", d);
+	ft_printf("ft_printf: %u|\n", i);
+	printf("rl_printf: %u|\n", i);
 	ft_printf("\n");
 	ft_printf("ft_printf: %05d|\n", 123);
 	printf("rl_printf: %05d|\n", 123);

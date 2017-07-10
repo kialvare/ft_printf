@@ -32,4 +32,5 @@ typedef struct	s_conv
 }				t_conv;
 
 int		ft_printf(const char *format, ...);
-int print_char(va_list argp);
+int		print_char(va_list argp, char next);
+int		print_nums(va_list argp, char next);
