@@ -11,50 +11,190 @@
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
 #include <stdio.h>
 #include <stdarg.h>
 
-// [ 0 , 1 , 2 ] ?
-//   ^
-//   ^argp
+char	valid_char(char c)
+{
+	if (c == 'd' || c == 'D' || c == 'i')
+		return (1);
+	if (c == 'p')
+		return (1);
+	if (c == 'x' || c == 'X')
+		return (1);
+	if (c == 'o' || c == 'O')
+		return (1);
+	if (c == 's' || c == 'S')
+		return (1);
+	if (c == 'c' || c == 'C')
+		return (1);
+	return (0);
+}
+
+int		get_size(int n, int base)
+{
+	int	size;
+	int	i;
+
+	size = 0;
+	i = 1;
+	if (n < 0 && (size = 1))
+		n = -n;
+	while (i < n)
+	{
+		i *= base;
+		size++;
+	}
+	return (size);
+}
+
+int		get_base(char c)
+{
+	if (c == 'x' || c == 'X')
+		return (16);
+	if (c == 'o')
+		return (8);
+	if (c == 'b')
+		return (2);
+	return (10);
+}
+
+int			get_param_size(t_print *print, void *param)
+{
+	int		size;
+	int		base;
+
+	size = 1;
+	base = 0;
+	if (print->c != 's' || print->c != 'c')
+	{
+		base = get_base(print->c);
+		size = get_size(*(int *)param, base);
+	}
+	else if (print->c == 's')
+		size = ft_strlen(*(char **)param);
+	return (size);
+}
+
+int		ft_putnchar(char c, int n)
+{
+	int		i;
+
+	i = -1;
+	while (++i < n)
+		ft_putchar(c);
+	return (1);
+}
+
+int		get_print_size(t_print *print,  int size)
+{
+	int base;
+
+	base = get_base(print->c);
+	if (print->width == 0 && print->precision == 0)
+		return (size);
+	if (print->width > 0 && print->precision == 0)
+		return (print->width - size);
+	if (print->width == 0 && print->precision > 0)
+		return (print->width - size);
+	if (print->width > print->precision)
+		return (print->width);
+	return (print->precision);
+}
+
+void		print_param(t_print *print, void *param)
+{
+	if (print->c == 'd' || print->c == 'i')
+	{
+		if (print->flag == '-' && *(int *)param < 0)
+			ft_putnbr(-(*(int *)param));
+		else
+			ft_putnbr(*(int *)param);
+	}
+	else if (print->c == 'c')
+		ft_putchar(*(char *)param);
+	else if (print->c == 'x' || print->c == 'X')
+		ft_puthexa(*(int *)param, print->c);
+	else if (print->c == 's')
+		ft_putstr(*(char **)param);
+	else if (print->c == 'o')
+		ft_putbase(*(int *)param, 8, "01234567");
+}
+
+void	print_zero(char c)
+{
+	ft_putchar('0');
+	ft_putchar(c);
+}
+
+int		start_print(t_print *print, va_list ap)
+{
+	long int	param = 0;
+	int	print_size;
+	int	size;
+	int	ret;
+
+	param = va_arg(ap, int);
+	size = get_param_size(print, &param);
+	print_size = get_print_size(print, size);
+	ret = print_size;
+	if ((print->flag == '+' && param > 0) || (print->flag == '-' && param < 0))
+		print_size--;
+	if (print->flag == '-' && param < 0)
+		ft_putchar('-');
+	print_size -= (print->flag == '#') ? 2 : 0;
+	print_size += (print->c == 's') ? 1 : 0;
+	if (print->flag == ' ' || (print->width > print->precision))
+		ft_putnchar(' ', print_size - print->precision);
+	if (print->flag == '#' && (print->c == 'x' || print->c == 'X'))
+		print_zero(print->c);
+	if ((print->flag == '0' && !print->precision) || print->precision)
+		ft_putnchar('0', print->precision - size);
+	if (print->flag == '+' && param > 0)
+		ft_putchar('+');
+	print_param(print, &param);
+	return (ret);
+}
+
+void	populate_struct(t_print *print, int *i, const char *format)
+{
+	if ((print->flag = check_flag(format[*i])) > 0)
+		(*i)++;
+	print->width = get_width(format, i);
+	print->precision = get_precision(format, i);
+	print->length = get_mods(format, i);
+	print->c = format[*i];
+	(*i)++;
+}
 
 int		ft_printf(const char *format, ...)
 {
-	const char *p;
-	va_list argp;
-	int d;
-	char *s;
-	t_flags flag;
+	int		i;
+	t_print	*print;
+	va_list		ap;
+	int		ret;
 
-	va_start(argp, format);
-	p = format;
-	while (*p != '\0')
+	i = -1;
+	ret = 0;
+	va_start(ap, format);
+	while (format[++i])
 	{
-		if (*p != '%')
-			ft_putchar(*p);
-		else
+		if (format[i] == '%')
 		{
-			char next = *++p;
-			if (next == 'c' || next == '%')
-				print_char(argp, next);
-			else if (next == 's')
-			{
-				s = va_arg(argp, char *);
-				ft_putstr(s);
-			}
-			else if (next == 'd' || next == 'u')
-				print_nums(va_list argp, char next);
-			else if (next == '0')
-			{
-				flag.zero = *p++;
-				d = va_arg(argp, int);
-				printf("num: %s\n", ft_itoa(flag.zero));
-			}
+			i++;
+			if (!(print = (t_print *)malloc(sizeof(*print))))
+				return (0);
+			populate_struct(print, &i, format);
+			//printf("\nLALA  %c  LALA\n", print->c);
+			if (valid_char(print->c))
+				ret += start_print(print, ap);
+			free(print);
+			print = NULL;
 		}
-		p++;
+		ft_putchar(format[i]);
+		ret++;
 	}
-	va_end(argp);
-	return (0);
+	printf("Ret: %d\n", ret);
+	return (ret);
 }
 

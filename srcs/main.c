@@ -15,7 +15,7 @@
 
 int		main(void)
 {
-	unsigned int i;
+	/*unsigned int i;
 	int d;
 	char *str;
 
@@ -34,6 +34,42 @@ int		main(void)
 	printf("rl_printf: %u|\n", i);
 	ft_printf("\n");
 	ft_printf("ft_printf: %05d|\n", 123);
-	printf("rl_printf: %05d|\n", 123);
+	printf("rl_printf: %05d|\n", 123);*/
+
+	int i;
+
+	i = 0;
+	printf("Real: %c\n", 'a');
+	ft_printf("Mine: %c\n", 'a');
+
+	printf("Real: %10d\n", +42);
+	ft_printf("Mine: %10d\n", +42);
+
+	printf("Real: %.5d\n", +42);
+	ft_printf("Mine: %.5d\n", +42);
+
+	printf("Real: %10.5d\n", +42);
+	ft_printf("Mine: %10.5d\n", +42);
+
+	printf("Real: %5.10d\n", +42);
+	ft_printf("Mine: %5.10d\n", +42);
+
+	/*printf("Real: %#d\n", +42);
+	ft_printf("Mine: %#d\n", +42);*/
+
+	printf("Real: %0d\n", +42);
+	ft_printf("Mine: %0d\n", +42);
+
+	printf("Real: %+d\n", +42);
+	ft_printf("Mine: %+d\n", +42);
+
+	printf("Real: %-d\n", +42);
+	ft_printf("Mine: %-d\n", +42);
+
+	printf("Real: %+d\n", -42);
+	ft_printf("Mine: %+d\n", -42);
+
+	/*printf("Real: %0-d\n", -42);
+	ft_printf("Mine: %0-d\n", -42);*/
 	return (0);
 }
