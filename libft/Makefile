@@ -33,7 +33,7 @@ ft_islower.c ft_isupper.c ft_strrev.c ft_max.c ft_strndup.c ft_lstaddtotheend.c
 
 OBJ := $(patsubst %.c,%.o,$(SRC))
 
-HEADER_DIR = libft.h
+HEADER_DIR = ./includes/libft.h
 
 CFLAGS = -c -Wall -Werror -Wextra
 

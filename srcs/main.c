@@ -38,15 +38,15 @@ int		main(void)
 
 	int i;
 
-	i = 0;
+	i = 42;
 	printf("Real: %c\n", 'a');
 	ft_printf("Mine: %c\n", 'a');
 
 	printf("Real: %10d\n", +42);
 	ft_printf("Mine: %10d\n", +42);
 
-	printf("Real: %.5d\n", +42);
-	ft_printf("Mine: %.5d\n", +42);
+	printf("Real: %4.2d\n", +42);
+	ft_printf("Mine: %4.2d\n", +42);
 
 	printf("Real: %10.5d\n", +42);
 	ft_printf("Mine: %10.5d\n", +42);
@@ -57,8 +57,8 @@ int		main(void)
 	/*printf("Real: %#d\n", +42);
 	ft_printf("Mine: %#d\n", +42);*/
 
-	printf("Real: %0d\n", +42);
-	ft_printf("Mine: %0d\n", +42);
+	printf("Real(unsigned): %0u\n", +42);
+	ft_printf("Mine(unsigned): %0u\n", +42);
 
 	printf("Real: %+d\n", +42);
 	ft_printf("Mine: %+d\n", +42);
@@ -71,5 +71,8 @@ int		main(void)
 
 	/*printf("Real: %0-d\n", -42);
 	ft_printf("Mine: %0-d\n", -42);*/
+
+	printf("Real: %08x\n", i);
+	ft_printf("Mine: %08x\n", i);
 	return (0);
 }

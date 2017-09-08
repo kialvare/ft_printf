@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
-static char				*num_str(unsigned int n, char *s, unsigned int i)
+static char				*num_str(int n, char *s, int i)
 {
-	unsigned int num;
+	int num;
 
 	i--;
 	if (n < 0)
@@ -34,19 +34,19 @@ static char				*num_str(unsigned int n, char *s, unsigned int i)
 	return (s);
 }
 
-static unsigned int		num_len(unsigned int n)
+static int		num_len(int n)
 {
-	unsigned int i;
-	unsigned int num;
+	int i;
+	int num;
 
 	i = 0;
 	if (n < 0)
 	{
-		num = (unsigned int)-n;
+		num = (int)-n;
 		i++;
 	}
 	else
-		num = (unsigned int)n;
+		num = (int)n;
 	while (num > 0)
 	{
 		num = num / 10;
@@ -55,9 +55,9 @@ static unsigned int		num_len(unsigned int n)
 	return (i);
 }
 
-char					*ft_itoa(unsigned int n)
+char					*ft_itoa(int n)
 {
-	unsigned int	size;
+	int	size;
 	char			*s;
 
 	size = num_len(n);

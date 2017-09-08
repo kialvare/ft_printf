@@ -1,4 +1,3 @@
-#include "../libft/libft.h"
 #include "../includes/ft_printf.h"
 
 int		ft_putaddr(unsigned int n)

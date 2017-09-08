@@ -1,6 +1,6 @@
 char	check_flag(char c)
 {
-	if (c == '#' || c == '+' || c == '-' || c == ' ' || c == '0')
+	if (c == '#' || c == '0' || c == '-' || c == '+' || c == ' ')
 		return (c);
 	return (0);
 }

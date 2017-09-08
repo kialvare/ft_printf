@@ -88,9 +88,6 @@ int		ft_putnchar(char c, int n)
 
 int		get_print_size(t_print *print,  int size)
 {
-	int base;
-
-	base = get_base(print->c);
 	if (print->width == 0 && print->precision == 0)
 		return (size);
 	if (print->width > 0 && print->precision == 0)
@@ -181,6 +178,8 @@ int		ft_printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
+			//printf("|Form: %s|", format);
+			//printf("|i: %d|\n", i);
 			i++;
 			if (!(print = (t_print *)malloc(sizeof(*print))))
 				return (0);
@@ -194,7 +193,6 @@ int		ft_printf(const char *format, ...)
 		ft_putchar(format[i]);
 		ret++;
 	}
-	printf("Ret: %d\n", ret);
 	return (ret);
 }
 
