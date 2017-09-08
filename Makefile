@@ -14,6 +14,7 @@ LIB_FILES = ft_putnbr.c \
 			ft_putchar_fd.c \
 			ft_putstr.c \
 			ft_putstr_fd.c \
+			ft_strlen.c \
 			ft_itoa.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
